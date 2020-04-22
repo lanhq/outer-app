@@ -26,7 +26,7 @@ class App extends React.Component {
     var container = document.getElementById('newMessage'),
         newChild = document.createElement("p");
 
-    newChild.innerHTML = "#<b>" + newMessageCount + "</b>: " + msg;
+    newChild.innerHTML = "#<b>" + newMessageCount + "</b>: " + JSON.stringify(msg, undefined, 4);
     if (container.childElementCount >= 5) {
         container.removeChild(container.lastElementChild);
     }

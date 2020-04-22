@@ -6,7 +6,7 @@ class EmbeddedControl extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            iframeSrc: "https://staging3.intgdc.com/analyze/embedded/#/"
+            iframeSrc: "https://staging2.intgdc.com/analyze/embedded/#/"
         };
     }
 
@@ -21,7 +21,7 @@ class EmbeddedControl extends React.PureComponent {
         return (
           <div className="embedded-control">
             embedded URL: <input value={this.state.iframeSrc} onChange={this.onIframeSrcChanged}/>
-            <iframe id="embedded-AD" src={this.state.iframeSrc} width="80%" height="400px" frameBorder="0" title="embedded AD"></iframe>
+            <iframe id="embedded-AD" src={this.state.iframeSrc} width="80%" height="350px" frameBorder="0" title="embedded AD"></iframe>
           </div>
         );
     }
