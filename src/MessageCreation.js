@@ -23,7 +23,8 @@ class MessageCreation extends React.PureComponent {
                             identifiers: [],
                             uris: []
                         }
-                    }
+                    },
+                    contextId: `drillable-items-${(new Date()).getTime()}`
                 }
             }
         }));
@@ -38,7 +39,7 @@ class MessageCreation extends React.PureComponent {
                         reportId: "84120",
                         projectId: "px4o16t9ftwkloa82p4o78zv34lqk4vs"
                     },
-                    contextId: "open_1"
+                    contextId: `open-${(new Date()).getTime()}`
                 }
             }
         }));
@@ -50,7 +51,7 @@ class MessageCreation extends React.PureComponent {
                 product: "analyticalDesigner",
                 event: {
                     name: "clear",
-                    contextId: "clear_1"
+                    contextId: `clear-${(new Date()).getTime()}`
                 }
             }
         }));
@@ -65,7 +66,7 @@ class MessageCreation extends React.PureComponent {
                     data: {
                         title: "test save"
                     },
-                    contextId: "save_1"
+                    contextId: `save-${(new Date()).getTime()}`
                 }
             }
         }));
@@ -80,7 +81,7 @@ class MessageCreation extends React.PureComponent {
                     data: {
                         title: "test save as"
                     },
-                    contextId: "saveas_1"
+                    contextId: `save-as-${(new Date()).getTime()}`
                 }
             }
         }));
@@ -100,7 +101,7 @@ class MessageCreation extends React.PureComponent {
                             includeFilterContext: true
                         }
                     },
-                    contextId: "export_1"
+                    contextId: `export-${(new Date()).getTime()}`
                 }
             }
         }));
@@ -130,6 +131,62 @@ class MessageCreation extends React.PureComponent {
         onMessageChange(value);
     }
 
+    resetMessageAsUndoFormat = () => {
+        this.changeMessage(JSON.stringify({
+            gdc: {
+                product: "analyticalDesigner",
+                event: {
+                    name: "undo",
+                    contextId: `undo-${(new Date()).getTime()}`
+                }
+            }
+        }));
+    }
+
+    resetMessageAsRedoFormat = () => {
+        this.changeMessage(JSON.stringify({
+            gdc: {
+                product: "analyticalDesigner",
+                event: {
+                    name: "redo",
+                    contextId: `redo-${(new Date()).getTime()}`
+                }
+            }
+        }));
+    }
+
+    resetMessageAsSetFilterContextFormat = () => {
+        this.changeMessage(JSON.stringify({
+            gdc: {
+                product: "dashboard",
+                event: {
+                    name: "setFilterContext",
+                    data: {
+                        filters: [
+                            {
+                                positiveAttributeFilter: {
+                                    displayForm: {
+                                        identifier: ""
+                                    },
+                                    in: []
+                                }
+                            },
+                            {
+                                negativeAttributeFilter: {
+                                    notIn: [],
+                                    displayForm: {
+                                        identifier: ""
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    contextId: `setFilterContext-${(new Date()).getTime()}`
+                }
+            }
+        }));
+    }
+
     render() {
         return (
           <div className="message-creation">
@@ -139,8 +196,12 @@ class MessageCreation extends React.PureComponent {
             <button onClick={this.resetMessageAsSaveFormat}>save format</button>
             <button onClick={this.resetMessageAsSaveAsFormat}>save as format</button>
             <button onClick={this.resetMessageAsExportFormat}>export format</button>
+            <button onClick={this.resetMessageAsUndoFormat}>undo format</button>
+            <button onClick={this.resetMessageAsRedoFormat}>redo format</button>
             <br/>
-            <span>Message: </span><br/>
+            <strong>control filtering: </strong>
+            <button onClick={this.resetMessageAsSetFilterContextFormat}>setFilterContext format</button>
+            <br/><span>Message: </span><br/>
             <textarea className="fwMultilineTextbox" value={this.state.message} onChange={this.onMessageChange} cols={120} rows={10} />
           </div>
         );
